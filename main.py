@@ -52,8 +52,38 @@ def home():
                 [original]
             )
             index = res.lastrowid
-        return render_template('home.html', short_url=host + index)
+        return render_template('home.html', short_url=host + str(index))
     return render_template('home.html')
+
+# def getId(short_url):
+#     i = short_url.find(':5000')
+#     i = i + 6
+#     for j in short_url
+#         if(short_url[j]< 0 or short_url[j] > 9)
+#             raise ValueError('Invalid URL')
+#     ans = int(short_url[i:])
+#     return ans
+
+
+@app.route('/<short_url>')
+def redirect_url(short_url):
+    # try:
+    #     id = getId(short_url);
+    #     pass
+    # except Exception as e:
+    #     raise
+    id = short_url
+    url = localhost
+    with sqlite3.connect('urls.db') as connect:
+        cursor = connect.cursor()
+        result = cursor.execute('SELECT URL FROM URLS WHERE ID=?', id)
+        try:
+            short = res.fetchone()
+            if short is not None:
+                url = short[0]
+        except Exception as e:
+            print(e)
+    return redirect(url)
 
 if __name__ == '__main__':
     table_check()
